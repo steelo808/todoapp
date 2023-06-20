@@ -1,17 +1,18 @@
 const PORT = process.env.PORT ?? 8000
 const express = require('express');
 const app = express();
+const pool = require('./db')
 
 
 // get all todos
 
-app.get('/todos', (req, res)=>{
+app.get('/todos',async (req, res)=>{
     
     try{
-        //await
-
-    }catch (err) {
-        console.error('error')
+        const todos = await pool.query('SELECT * FROM todos');
+        res.json(todos.rows);
+    }   catch (err) {
+        console.error('error');
     }
 })
 
